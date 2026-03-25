@@ -16,7 +16,7 @@ archives:
         formats: [zip]
     name_template: "openlink_{{ .Os }}_{{ .Arch }}"
 
-release:
-  github:
-    owner: afumu
-    name: openlink
+# release:
+#   github:
+#     owner: afumu
+#     name: openlink
