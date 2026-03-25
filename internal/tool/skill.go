@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/afumu/openlink/internal/skill"
-	"github.com/afumu/openlink/internal/types"
+	"github.com/Tristan1127/openlink/internal/skill"
+	"github.com/Tristan1127/openlink/internal/types"
 )
 
 type SkillTool struct {

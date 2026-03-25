@@ -49,8 +49,8 @@ function tryParseToolJSON(raw: string): any | null {
 
   function getConvId(): string {
     // Claude: /chat/<id>, ChatGPT: /c/<id>, DeepSeek: ?id=<id> or path
-    const m = location.pathname.match(/\/(?:chat|c)\/([^/?#]+)/) ||
-              location.search.match(/[?&]id=([^&]+)/);
+    const m = location.pathname.match(/\/(?:chat|c|a\/chat\/s)\/([^/?#]+)/) ||
+              location.search.match(/[?&](?:id|chatId)=([^&]+)/);
     return m ? m[1] : '__default__';
   }
 

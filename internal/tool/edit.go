@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/afumu/openlink/internal/security"
-	"github.com/afumu/openlink/internal/types"
+	"github.com/Tristan1127/openlink/internal/security"
+	"github.com/Tristan1127/openlink/internal/types"
 )
 
 type EditTool struct {

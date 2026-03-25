@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-REPO="afumu/openlink"
+REPO="Tristan1127/openlink"
 BIN="openlink"
 INSTALL_DIR="/usr/local/bin"
 

@@ -9,8 +9,8 @@ import (
 	"strings"
 	"sync/atomic"
 
-	"github.com/afumu/openlink/internal/tool"
-	"github.com/afumu/openlink/internal/types"
+	"github.com/Tristan1127/openlink/internal/tool"
+	"github.com/Tristan1127/openlink/internal/types"
 )
 
 type Executor struct {

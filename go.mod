@@ -1,4 +1,4 @@
-module github.com/afumu/openlink
+module github.com/Tristan1127/openlink
 
 go 1.23.0
 

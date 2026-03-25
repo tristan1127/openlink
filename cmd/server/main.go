@@ -6,10 +6,10 @@ import (
 	"log"
 	"os"
 
-	"github.com/afumu/openlink/internal/security"
-	"github.com/afumu/openlink/internal/server"
-	"github.com/afumu/openlink/internal/types"
-	"github.com/afumu/openlink/prompts"
+	"github.com/Tristan1127/openlink/internal/security"
+	"github.com/Tristan1127/openlink/internal/server"
+	"github.com/Tristan1127/openlink/internal/types"
+	"github.com/Tristan1127/openlink/prompts"
 )
 
 func main() {

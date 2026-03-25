@@ -64,8 +64,21 @@ function getSiteConfig(): SiteConfig {
   const h = location.hostname;
   if (h.includes('gemini.google.com'))
     return { editor: 'div.ql-editor[contenteditable="true"]', sendBtn: 'button.send-button[aria-label*="发送"], button.send-button[aria-label*="Send"]', stopBtn: null, fillMethod: 'execCommand', useObserver: true, responseSelector: 'model-response, .model-response-text, message-content' };
-  // Default: AI Studio
-  return { editor: 'textarea[placeholder*="Start typing a prompt"]', sendBtn: 'button.ctrl-enter-submits.ms-button-primary[type="submit"], button[aria-label*="Run"]', stopBtn: null, fillMethod: 'value', useObserver: true, responseSelector: 'ms-chat-turn' };
+  if (h.includes('claude.ai'))
+    return { editor: 'div[contenteditable="true"]', sendBtn: 'button[aria-label="Send Message"]', stopBtn: 'button[aria-label="Stop Generating"]', fillMethod: 'prosemirror', useObserver: true, responseSelector: '.font-claude-message' };
+  if (h.includes('chatgpt.com'))
+    return { editor: '#prompt-textarea', sendBtn: 'button[data-testid="send-button"]', stopBtn: 'button[aria-label="Stop generating"]', fillMethod: 'execCommand', useObserver: true, responseSelector: '[data-message-author-role="assistant"]' };
+  if (h.includes('grok.com'))
+    return { editor: 'textarea', sendBtn: 'button[aria-label="Grok something"]', stopBtn: null, fillMethod: 'value', useObserver: true, responseSelector: '.message-bubble' };
+  if (h.includes('tongyi.aliyun.com'))
+    return { editor: 'textarea', sendBtn: 'button.send-btn', stopBtn: null, fillMethod: 'value', useObserver: true, responseSelector: '.message-content' };
+  if (h.includes('doubao.com'))
+    return { editor: 'textarea', sendBtn: 'button[data-testid="send-button"]', stopBtn: null, fillMethod: 'value', useObserver: true, responseSelector: '.message-content' };
+  if (h.includes('deepseek.com'))
+    return { editor: 'textarea', sendBtn: '.ds-button', stopBtn: null, fillMethod: 'value', useObserver: true, responseSelector: '.ds-markdown' };
+
+// Default: AI Studio
+return { editor: 'textarea[placeholder*="Start typing a prompt"]', sendBtn: 'button.ctrl-enter-submits.ms-button-primary[type="submit"], button[aria-label*="Run"]', stopBtn: null, fillMethod: 'value', useObserver: true, responseSelector: 'ms-chat-turn' };
 }
 
 if (!(window as any).__OPENLINK_LOADED__) {
@@ -116,7 +129,8 @@ function hashStr(s: string): number {
 }
 
 function getConversationId(): string {
-  const m = location.pathname.match(/\/chat\/([^/?#]+)/) || location.search.match(/[?&]id=([^&]+)/);
+  const m = location.pathname.match(/\/(?:chat|c|a\/chat\/s)\/([^/?#]+)/) || 
+            location.search.match(/[?&](?:id|chatId)=([^&]+)/);
   return m ? m[1] : '__default__';
 }
 
@@ -295,8 +309,8 @@ function startDOMObserver(_responseSelector: string) {
   // 块级标签：遍历到这些元素时在前面插入换行
   const BLOCK_TAGS = new Set(['P', 'DIV', 'BR', 'LI', 'TR', 'PRE', 'BLOCKQUOTE', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6']);
 
-  // 跳过这些元素及其子树（UI 噪声）
-  const SKIP_TAGS = new Set(['MS-THOUGHT-CHUNK', 'MAT-ICON', 'SCRIPT', 'STYLE', 'BUTTON', 'MAT-EXPANSION-PANEL-HEADER']);
+  // 跳过这些元素及其子树（UI 噪声，包括 AI 的思考过程）
+  const SKIP_TAGS = new Set(['MS-THOUGHT-CHUNK', 'DS-THOUGHT', 'DS-REASONING', 'THOUGHT', 'MAT-ICON', 'SCRIPT', 'STYLE', 'BUTTON', 'MAT-EXPANSION-PANEL-HEADER']);
 
   function extractText(node: Node, buf: string[]): void {
     if (node.nodeType === Node.TEXT_NODE) {
